@@ -1,9 +1,15 @@
 spring:
   application:
-    name: activityservice
+    name: activity-service
   data:
     mongodb:
       uri: mongodb://localhost:27017/fitness_activity_db
       database: fitness_activity_db
 server:
   port: 5001
+
+# to locate eureka server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5002/eureka/ # our eureka server host
