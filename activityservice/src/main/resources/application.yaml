@@ -10,6 +10,10 @@ server:
 
 # to locate eureka server
 eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    ip-address: 127.0.0.1
   client:
     serviceUrl:
       defaultZone: http://localhost:5002/eureka/ # our eureka server host

@@ -5,11 +5,13 @@ import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserService {
 
     private UserRepository userRepository;
@@ -24,6 +26,7 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
 
+        log.info("Saving user with email : {}", request.getEmail());
         user = userRepository.save(user);
 
         UserResponse userResponse = new UserResponse();
@@ -38,6 +41,8 @@ public class UserService {
     }
 
     public UserResponse getUserProfile(String userId){
+
+        log.info("Fetching user profile : {}", userId);
         User user =  userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No user found with associated user id"));
 
         UserResponse userResponse = new UserResponse();
@@ -48,5 +53,9 @@ public class UserService {
         userResponse.setUpdatedAt(user.getUpdatedAt());
         userResponse.setEmail(user.getEmail());
         return userResponse;
+    }
+
+    public Boolean existsByUserId(String userId) {
+        return userRepository.existsById(userId);
     }
 }
